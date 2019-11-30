@@ -7,32 +7,126 @@
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 var factorial = function(n) {
+	if (n<0) {
+		return null;
+	} else if (n === 0) {
+		return 1;
+	} else {
+		return n * factorial(n-1);
+	}
 };
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
+  var copy = array.slice();
+  if (copy.length > 0) {
+      var el = copy.pop();
+     
+      return el + sum(copy);
+  }
+   else {
+      return 0;
+  }
+
+
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+  var copy = array.slice();
+  if (copy.length > 0) {
+      var el = copy.pop();
+      if (!Array.isArray(el)) {
+        return el + arraySum(copy);
+      	
+      } else {
+        return arraySum(el) + arraySum(copy);
+      }
+  }
+   else {
+      return 0;
+  }
+
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+	n = Math.abs(n);
+	if (n === 1) {
+		return false;
+	} else if (n === 0) {
+		return true;
+	} else {
+		return isEven(n-2);
+	}
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+	//n = Math.abs(n);
+	if (n===0) {
+		return 0;
+	}
+		else if (n < 0) {
+			if (n === -2) {
+				return -1;
+			} else {
+				return n+1 + sumBelow(n+1);
+			}
+		}
+	 else if (n === 2) {
+		return 1;
+	} else {
+		return n-1 + sumBelow(n-1);
+	}
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+    // Decide if we need to decrement or increment
+    // Depending on first parameter being lower
+    // or higher than the 2nd parameter
+    var plusOrMinus;
+        if (x < y) {
+        plusOrMinus = 1;
+    } else if (x > y) {
+        plusOrMinus = -1;
+    } else if (x === y) {
+      return [ ];
+    }
+
+      // Main code that puts every consequtive
+      // number from the range into a space separated string
+      if (x+plusOrMinus < y || x+plusOrMinus > y) {
+        if (x+plusOrMinus*2 ===y) {
+            return (x+plusOrMinus).toString();
+        } else {
+          var isArray = range(x+plusOrMinus, y);
+          var tempVar;
+          if (Array.isArray(isArray)) {
+            tempVar = isArray.join(' ');
+          } else {
+            tempVar = isArray;
+          }
+            result = (x+plusOrMinus).toString() + ' ' + (tempVar);
+        }
+        
+      } else if (x+plusOrMinus === y) {
+        return [];
+      }
+
+	var arrayR = result.split(' ').map(Number);
+
+  return arrayR;
+  
 };
+
+
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
